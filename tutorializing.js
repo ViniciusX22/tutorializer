@@ -2,11 +2,13 @@ class Tutorializer {
     constructor(docFile) {
 
         this.doc = null;
+        this.docFile = docFile;
+    }
 
+    init() {
         if(window.fetch) {
             fetch(docFile)
                 .then(this._status)
-                .then(this.assignDoc)
                 .catch(this.error);
         }
     }
