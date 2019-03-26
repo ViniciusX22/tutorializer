@@ -1,21 +1,21 @@
 class Tutorializer {
     constructor(docFile) {
-
-        this.doc = null;
         this.docFile = docFile;
+        this.doc = null;
     }
 
     init() {
         if(window.fetch) {
-            fetch(docFile)
+            fetch(this.docFile)
                 .then(this._status)
+                .then(res => res.text())
+                .then(this.assignDoc)
                 .catch(this.error);
         }
     }
 
-    error(msg) {
-        console.log(msg);
-        alert(msg);
+    error(...msg) {
+        console.log(...msg);
     }
 
     _status(res) {
@@ -23,17 +23,22 @@ class Tutorializer {
         return Promise.reject("Não foi possível importar a documentação");
     }
 
-    assignDoc(res) {
+    assignDoc(textXml) {
         let parser = new DOMParser();
-        this.doc = parser.parseFromString(res.text(), "application/xml");
-        if(this.doc.parsererror) {
-            this.error("Não foi possível converter a documentação");
+        let doc = parser.parseFromString(textXml, "application/xml");
+        if(doc.firstChild.nodeName == "parsererror") {
+            this.error("Não foi possível converter a documentação", textXml);
             return;
         }
-        for(let i = 0; i < this.doc.children.length; i++) {
-            let nodes = document.querySelectorAll("[data-doc="+this.doc.children[i].nodeName+"]");
-            let text = this.doc.children[i].innerHTML;
-            nodes.forEach(node => new Tooltip(node, { title: text }));
+        let docTag = doc.getElementsByTagName('doc')[0];
+        for(let i = 0; i < docTag.children.length; i++) {
+            let nodes = document.querySelectorAll("[data-doc="+docTag.children[i].nodeName+"]");
+            let text = docTag.children[i].innerHTML;
+            nodes.forEach(node => 
+                new Tooltip(node, {
+                    title: text
+                })
+            );
         }
     }
 }

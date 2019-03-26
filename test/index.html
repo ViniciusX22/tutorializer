@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="column">
-            <table class="table is-fullwidth">
+            <table class="table is-fullwidth" data-doc="total">
               <thead>
                 <tr>
                   <th class="has-text-centered" colspan="2">Total</th>
@@ -129,7 +129,8 @@
     <script src="https://unpkg.com/tooltip.js"></script>
     <script src="../tutorializing.js"></script>
     <script>
-      window.onload = () => new Tutorializer("doc.xml").init();
+      let tuto = new Tutorializer("doc.xml");
+      tuto.init();
     </script>
   </body>
 </html>
