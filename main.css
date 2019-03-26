@@ -1,0 +1,10 @@
+doc-content {
+    background-color: rgb(223, 221, 221);
+    border-radius: 5px;
+    color: black;
+    padding: 7px;
+}
+
+.none {
+    display: none;
+}
