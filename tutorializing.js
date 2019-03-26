@@ -1,6 +1,8 @@
 class Tutorializer {
     constructor(docFile) {
 
+        this.doc = null;
+
         if(window.fetch) {
             fetch(docFile)
                 .then(this._status)
