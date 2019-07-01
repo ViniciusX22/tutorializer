@@ -1,14 +1,13 @@
 class Tutorializer {
     constructor(docFile) {
-
-        this.doc = null;
         this.docFile = docFile;
     }
 
     init() {
         if(window.fetch) {
-            fetch(docFile)
+            fetch(this.docFile)
                 .then(this._status)
+                .then(this.assignDoc)
                 .catch(this.error);
         }
     }
@@ -25,14 +24,14 @@ class Tutorializer {
 
     assignDoc(res) {
         let parser = new DOMParser();
-        this.doc = parser.parseFromString(res.text(), "application/xml");
-        if(this.doc.parsererror) {
+        let doc = parser.parseFromString(res.text(), "application/xml");
+        if(doc.firstChild.nodeName == "parsererror") {
             this.error("Não foi possível converter a documentação");
             return;
         }
-        for(let i = 0; i < this.doc.children.length; i++) {
-            let nodes = document.querySelectorAll("[data-doc="+this.doc.children[i].nodeName+"]");
-            let text = this.doc.children[i].innerHTML;
+        for(let i = 0; i < doc.children.length; i++) {
+            let nodes = document.querySelectorAll("[data-doc="+doc.children[i].nodeName+"]");
+            let text = doc.children[i].innerHTML;
             nodes.forEach(node => new Tooltip(node, { title: text }));
         }
     }
