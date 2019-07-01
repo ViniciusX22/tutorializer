@@ -1,6 +1,9 @@
-<texto>
-    Aqui você insere o texto que será processado
-</texto>
-<total>
-    Aqui é exibido o total de caracteres e letras no texto
-</total>
+<?xml version="1.0" encoding="UTF-8"?>
+<doc>
+    <texto>
+        Aqui você insere o texto que será processado
+    </texto>
+    <total>
+        Aqui é exibido o total de caracteres e letras no texto
+    </total>
+</doc>

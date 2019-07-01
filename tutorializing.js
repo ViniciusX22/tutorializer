@@ -1,6 +1,7 @@
 class Tutorializer {
     constructor(docFile) {
         this.docFile = docFile;
+        this.doc = null;
     }
 
     init() {
@@ -12,9 +13,8 @@ class Tutorializer {
         }
     }
 
-    error(msg) {
-        console.log(msg);
-        alert(msg);
+    error(...msg) {
+        console.log(...msg);
     }
 
     _status(res) {
@@ -22,7 +22,7 @@ class Tutorializer {
         return Promise.reject("Não foi possível importar a documentação");
     }
 
-    assignDoc(res) {
+    assignDoc(textXml) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(res.text(), "application/xml");
         if(doc.firstChild.nodeName == "parsererror") {
